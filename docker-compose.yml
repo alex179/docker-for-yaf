@@ -9,7 +9,7 @@ services:
     links:
       - php    
     volumes:
-      - ../app:/app/www
+      - ../app/:/var/www/html/:rw
       - $PWD/config/nginx:/etc/nginx/conf.d:ro
       - ./data/logs/nginx/:/var/logs/nginx:rw
     restart: always
@@ -17,7 +17,7 @@ services:
     image: kimlyfly/php-7.2-fpm
     container_name: php
     volumes:
-      - ../app:/app/www
+      - ../app:/var/www/html/:rw
       - $PWD/config/php/conf.d:/usr/local/etc/php/conf.d:ro
       # php和mysql通信
       - ./data/mysql/run/mysqld:/var/run/mysqld:rw
@@ -55,7 +55,7 @@ services:
       # redis 配置文件
       - $PWD/config/redis:/etc/redis:ro
       # redis 持久化数据存储
-      - ./data/redis:/app/redis
+      - ./data/redis:/app/redis:rw
     # 以配置文件启动 redis
     command: redis-server /etc/redis/redis.conf
     restart: always

@@ -24,4 +24,9 @@ RUN echo http://mirrors.aliyun.com/alpine/v3.7/main > /etc/apk/repositories; \
   && docker-php-ext-enable xdebug redis yaf mcrypt mongodb \
   && apk del --no-cache linux-headers autoconf libmcrypt libmcrypt-dev libpng-dev postgresql-dev
 
+RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" && \
+    php composer-setup.php && \
+    php -r "unlink('composer-setup.php');" && \
+    mv composer.phar /usr/local/bin/composer && \
+    composer self-update
 
